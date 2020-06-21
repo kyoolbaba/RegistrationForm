@@ -12,8 +12,7 @@ import java.io.PrintWriter;
 public class Login extends HttpServlet {
 
     @Override
-    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
-            User user =new User();
+    public void service(ServletRequest req, ServletResponse res) throws  IOException {
         PrintWriter out=res.getWriter();
          out.println("<h1>UserName"+req.getParameter("username")+"</h1>");
         out.println("<h1>Password "+req.getParameter("password")+"</h1>");
