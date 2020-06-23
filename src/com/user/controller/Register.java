@@ -3,6 +3,7 @@ package com.user.controller;
 import com.user.dao.UserDao;
 import com.user.model.User;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -16,18 +17,26 @@ public class Register extends HttpServlet {
         User user =new User();
         PrintWriter out=res.getWriter();
         user.setUsername(req.getParameter("username"));
-        user.setPassword(req.getParameter("password"));
+        user.setPassword(req.getParameter("pass"));
         user.setContactNo(req.getParameter("contactno"));
         user.setFirstName(req.getParameter("fname"));
         user.setLastName(req.getParameter("lname"));
         user.setEmail(req.getParameter("email"));
-        out.println("<h1>UserName :"+req.getParameter("username")+"</h1>");
-        out.println("<h1>Password :"+req.getParameter("password")+"</h1>");
-        out.println("<h1>ContactNo :"+req.getParameter("contactno")+"</h1>");
-        out.println("<h1>FirstName :"+req.getParameter("fname")+"</h1>");
-        out.println("<h1>LastName :"+req.getParameter("lname")+"</h1>");
-        out.println("<h1>Email :"+req.getParameter("email")+"</h1>");
-        UserDao userDao=new UserDao();
-        userDao.registerUser(user);
+        try {
+            UserDao userDao=new UserDao();
+            boolean registered=userDao.registerUser(user);
+            if(registered){
+                out.println("<p class='successmessage'>You Have sucessfully registered</p>");
+                RequestDispatcher requestDispatcher=req.getRequestDispatcher("/index.jsp");
+                requestDispatcher.include(req, res);
+            }else{
+                out.println("<p class='successmessage'>UserName Already Used</p>");
+                RequestDispatcher requestDispatcher=req.getRequestDispatcher("/Register.jsp");
+                requestDispatcher.include(req, res);
+            }
+        } catch (ClassNotFoundException | ServletException e) {
+            e.printStackTrace();
+        }
+
     }
 }

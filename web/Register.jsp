@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login Page</title>
+    <title>Registration Form</title>
     <style type="text/css">
         body{
             background-color:#cf6e48;
@@ -44,23 +44,44 @@
             top:170px;
             left:13%;
         }
-        input[type=text]:focus.{
+        input[type=text]:focus{
             width:300px;
             height:50px;
+        }
+        input[type=password]:focus{
+            width:300px;
+            height:50px;
+        }
+        .successmessage{
+            color: #0029ff;
+            font-family:cursive;
+            font-size:20px;
+            position:absolute;
+            top:200px;
+            left:50%;
         }
 
     </style>
 </head>
 <body>
+
+<%
+    response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+
+    if(session.getAttribute("username")!=null)
+    {
+        response.sendRedirect("ProFilePage.jsp");
+    }
+%>
 <form action="register">
     <h1>Register</h1>
     <div class="user" >
-        FirstName:<input type="text" name="fname"><br>
-        LastName:<input type="text" name="lname"><br>
-        Email:<input type="text" name="email"><br>
-        ContactNumber:<input type="text" name="contactno"><br>
-        Username:<input type="text" name="username"><br>
-        Password:<input type="password" name="Password"><br>
+        FirstName:<input type="text" name="fname" placeholder="First Name"><br>
+        LastName:<input type="text" name="lname" placeholder="Last Name"><br>
+        Email:<input type="text" name="email" placeholder="email"><br>
+        ContactNumber:<input type="text" name="contactno" placeholder="Contact"><br>
+        Username:<input type="text" name="username" placeholder="Username" ><br>
+        Password:<input type="password" name="pass" placeholder="password"><br>
         <button type="submit">Register</button>
         <a href="index.jsp">Click here to login</a>
     </div>>

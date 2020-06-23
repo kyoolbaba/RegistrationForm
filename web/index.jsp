@@ -38,19 +38,44 @@
         top:170px;
         left:13%;
       }
-      input[type=text]:focus.some-username{
+      input[type=text]:focus{
         width:300px;
         height:50px;
       }
+      input[type=password]:focus{
+          width:300px;
+          height:50px;
+      }
+      .successmessage{
+        color:#00ffdd;
+        font-family:cursive;
+        font-size:20px;
+        position:absolute;
+        top:200px;
+        left:50%;
+      }
+
+
+
 
     </style>
   </head>
   <body>
+
+  <%
+    response.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+
+    if(session.getAttribute("username")!=null)
+    {
+      response.sendRedirect("ProFilePage.jsp");
+    }
+  %>
   <form action="login">
     <h1>Login</h1>
     <div class="user" >
+
       Username:<input type="text" name="username"><br>
-      Password:<input type="password" name="Password"><br>
+      Password:<input type="password" name="pass"><br>
       <button type="submit">Login</button>
       <a href="Register.jsp">Click here to register</a>
     </div>>
