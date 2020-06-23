@@ -70,7 +70,7 @@
       response.sendRedirect("ProFilePage.jsp");
     }
   %>
-  <form action="login">
+  <form action="login" method="post">
     <h1>Login</h1>
     <div class="user" >
 

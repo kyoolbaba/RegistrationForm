@@ -4,10 +4,7 @@ import com.user.dao.UserDao;
 import com.user.model.User;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
@@ -16,20 +13,25 @@ import java.sql.SQLException;
 public class Login extends HttpServlet {
 
     @Override
-    public void service(HttpServletRequest req, HttpServletResponse res) throws  IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws  IOException {
         PrintWriter out=res.getWriter();
-//         out.println("<h1>UserName :"+req.getParameter("username")+"</h1>");
-//        out.println("<h1>Password :"+req.getParameter("pass")+"</h1>");
         User user= new User();
+        //If you use the below parameter in some other servlet or jsp then this is URL Rewriting
         user.setUsername(req.getParameter("username"));
         user.setPassword(req.getParameter("pass"));
         try {
             UserDao userDao=new UserDao();
             boolean login=userDao.validateUser(user);
            if(login){
+//               Implementing HttpSession
                HttpSession httpSession=req.getSession();
                httpSession.setAttribute("username",user.getUsername());
                httpSession.setAttribute("pass",user.getPassword());
+//               Implementing Cookie
+               Cookie usernamecookie=new Cookie("username",user.getUsername());
+               res.addCookie(usernamecookie);
+               Cookie check=new Cookie("password","thisisnotPassword");
+                res.addCookie(check);
                RequestDispatcher rd=req.getRequestDispatcher("ProFilePage.jsp");
                rd.include(req, res);
            }else{
