@@ -73,7 +73,7 @@
         response.sendRedirect("ProFilePage.jsp");
     }
 %>
-<form action="register">
+<form action="register" method="post">
     <h1>Register</h1>
     <div class="user" >
         FirstName:<input type="text" name="fname" placeholder="First Name"><br>
